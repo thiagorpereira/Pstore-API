@@ -5,7 +5,13 @@
   "repository": "https://github.com/thiagorpereira/Pstore-API.git",
   "author": "Thiago Pereira <thiagorpereira7@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }
