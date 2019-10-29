@@ -5,28 +5,20 @@ server.use(express.json());
 
 const projects = [];
 
-
 //Middleware Global
 server.use((req,res, next) =>{
-  console.time('Request');
-  console.log(`Method : ${req.method}; URL : ${req.url} `);
-
-  next();
-
-  console.timeEnd('Request');
+  console.count("Requisições")
+  return next();
 });
-
 
 //Middleware Específico
 function checkProjectExists(req, res, next) {
-  const { index } = req.params;
-  if(!projects[index]){
-    return res.json({message : "Project not found"})
+  const { id } = req.params;
+  if(!projects[id]){
+    return res.json({ error : "Project not found"})
   }
   return next()
 }
-
-
 
 //Create Project
 server.post('/projects', (req, res)=>{
@@ -38,34 +30,44 @@ server.post('/projects', (req, res)=>{
 
 });
 
-// Read All
+// Read All Projects
 server.get('/projects', (req,res)=>{
   return res.json(projects)
 });
 
-// Read One
-server.get('/projects/:index', checkProjectExists, (req, res) =>{
-  const { index } = req.params;
-  const project = projects[index];
+// Read One project
+server.get('/projects/:id', checkProjectExists, (req, res) =>{
+  const { id } = req.params;
+  const project = projects[id];
   return res.json(project);
 });
 
 
-// Update
-server.put('/projects/:index', checkProjectExists, (req, res) =>{
-  const { index } = req.params;
-  projects[index] = req.body;
+// Update project
+server.put('/projects/:id', checkProjectExists, (req, res) =>{
+  const { id } = req.params;
+  const { title } = req.body; //new title
+
+  projects[id].title = title;
   return res.json(projects)
+
 })
 
-
 // Delete
-server.delete('/projects/:index', checkProjectExists, (req, res) =>{
-  const { index } = req.params;
-  projects.splice(index, 1);
+server.delete('/projects/:id', checkProjectExists, (req, res) =>{
+  const { id } = req.params;
+  projects.splice(id, 1);
   return res.send()
 })
 
+//Create task
+server.post('/projects/:id/tasks', checkProjectExists, (req, res) =>{
+  const { id } = req.params;
+  const { title } = req.body; 
+  projects[id].tasks.push(title);
+  return res.json(projects)
+
+})
 
 
 
