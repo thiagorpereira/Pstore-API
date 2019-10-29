@@ -12,7 +12,7 @@ Uma aplicação feita em NodeJS + Express.js para armazenar projetos e suas tare
 
 - `DELETE /projects/:id`: A rota deletar o projeto com o `id` presente nos parâmetros da rota;
 
-- `POST /projects/:id/tasks`: A rota receber um campo `title` e armazena uma nova tarefa no array de tarefas de um projeto específico escolhido através do `id` presente nos parâmetros da rota;
+- `POST /projects/:id/tasks`: A rota recebe um campo `title` e armazena uma nova tarefa no array de tarefas de um projeto específico escolhido através do `id` presente nos parâmetros da rota;
 
 
 ### Middlewares
